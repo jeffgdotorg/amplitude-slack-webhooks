@@ -39,33 +39,32 @@ In my main Amplitude project, the following keys in the webhook JSON payload are
 - `event_type`: The name of the event type in Amplitude (e.g. “[Guides-Surveys] Survey Submitted”)
 
 The following sub-keys within the top-level `event_properties` key are very relevant:
-`[Guides-Surveys] Survey Response`: The submitted value (e.g. “10” for a NPS survey)
-`[Guides-Surveys] Title`: Title of the survey, as it appears in the Amplitude web UI
-`[Guides-Surveys] Key`: A slug version of the survey title; utility unclear
-`[Guides-Surveys] Step Title`: Title of the survey step at which the user made the submission
-`[Guides-Surveys] Is Last Step`: Whether the submission happened in the survey’s final step (will be false even if the final step is just an “all done!” confirmation)
-`[Guides-Surveys] Type`: `survey` if it’s a survey; presumably `guide` if it’s a guide
-`[Guides-Surveys] Question UUID`: No idea, but might be useful sometime
-`[Guides-Surveys] App Type`: “web” if submitted from a browser
-`[Guides-Surveys] Page.path`: The path portion of the URL that the user was viewing when they submitted the survey
-`[Guides-Surveys] Page.domain`: The hostname portion of the URL the user was viewing
-`[Guides-Surveys] Page.title`: The <title> of the page the user was viewing
+- `[Guides-Surveys] Survey Response`: The submitted value (e.g. “10” for a NPS survey)
+- `[Guides-Surveys] Title`: Title of the survey, as it appears in the Amplitude web UI
+- `[Guides-Surveys] Key`: A slug version of the survey title; utility unclear
+- `[Guides-Surveys] Step Title`: Title of the survey step at which the user made the submission
+- `[Guides-Surveys] Is Last Step`: Whether the submission happened in the survey’s final step (will be false even if the final step is just an “all done!” confirmation)
+- `[Guides-Surveys] Type`: `survey` if it’s a survey; presumably `guide` if it’s a guide
+- `[Guides-Surveys] Question UUID`: No idea, but might be useful sometime
+- `[Guides-Surveys] App Type`: “web” if submitted from a browser
+- `[Guides-Surveys] Page.path`: The path portion of the URL that the user was viewing when they submitted the survey
+- `[Guides-Surveys] Page.domain`: The hostname portion of the URL the user was viewing
+- `[Guides-Surveys] Page.title`: The <title> of the page the user was viewing
 
 Working with these keys is tricky due to the presence of whitespace and square-bracket characters. 
 
 Interesting sub-keys within the top-level `user_properties` key:
-`internal`: Boolean indicating whether the user is identified as a company internal user
-`isBeta`: Boolean indicating whether the _preview mode_ feature flag is enabled in the user’s session
-`isOrgAdmin`: Boolean indicating whether the user is an organization administrator
-`org_id`: The user’s numeric `org_id`
-`email_domain`: The domain of the email address associated with the user’s platform account
+- `internal`: Boolean indicating whether the user is identified as a company internal user
+- `isBeta`: Boolean indicating whether the _preview mode_ feature flag is enabled in the user’s session
+- `isOrgAdmin`: Boolean indicating whether the user is an organization administrator
+- `org_id`: The user’s numeric `org_id`
+- `email_domain`: The domain of the email address associated with the user’s platform account
 
 Other interesting properties:
-`group_properties.org_id.{orgIdNumber}.organization_name`: Name of the user’s platform account org
+- `group_properties.org_id.{orgIdNumber}.organization_name`: Name of the user’s platform account org
 
 ### Example event JSON
-- [nps-only-survey-response.json](./example-amplitude-events/nps-only-survey-response.json) is an actual event payload (what goes into the FTL hopper) from submitting an NPS-only survey in staging. This is useful for feeding to the webhook configurator.
-- [nps-survey-response-quantitative.json](./example-amplitude-events/nps-survey-response-quantitative.json) and [nps-survey-response-qualitative.json](./example-amplitude-events/nps-survey-response-qualitative.json) is a pair of actual event payloads resulting from submitting a survey that has both an NPS question and a short-text question.
+- [nps-only-survey-response.json](./examples/amplitude-events/nps-only-survey-response.json) is an actual event payload (what goes into the FTL hopper) from submitting an NPS-only survey in staging. This is useful for feeding to the webhook configurator.
 
 ### A simple Flask app to dump webhook payloads
 Before I got acclimated to the rhythm required to get value out of Amplitude's _Live Log_ for webhooks, I wrote [a dead simple Python Flask app](./examples/hookdump/) that catches webhook posts and dumps them on stdout.
